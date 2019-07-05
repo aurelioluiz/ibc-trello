@@ -5,3 +5,18 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+3.times do
+  board = Board.new({
+    title: Faker::Markdown.headers
+  })
+  if board.save
+    5.times do
+      Task.create({
+        board_id: board.id,
+        title: Faker::Markdown.emphasis,
+        done: Faker::Boolean.boolean(0.3)
+      })
+    end
+  end
+end
