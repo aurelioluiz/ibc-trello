@@ -16,15 +16,15 @@ ActiveRecord::Schema.define(version: 2019_07_06_180608) do
   enable_extension "plpgsql"
 
   create_table "boards", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "tasks", force: :cascade do |t|
     t.bigint "board_id"
-    t.string "title"
-    t.boolean "done"
+    t.string "title", null: false
+    t.boolean "done", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["board_id"], name: "index_tasks_on_board_id"

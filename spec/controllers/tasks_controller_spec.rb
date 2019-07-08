@@ -29,7 +29,7 @@ RSpec.describe TasksController, type: :controller do
   # Task. As you add validations to Task, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    { board: FactoryBot.build(:board), title: Faker::Markdown.emphasis, done: Faker::Boolean.boolean(0.3) }
+    create(:task).attributes.except('id')
   }
 
   let(:invalid_attributes) {
@@ -43,7 +43,6 @@ RSpec.describe TasksController, type: :controller do
 
   describe "GET #index" do
     it "returns a success response" do
-      task = Task.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(response).to be_successful
     end
@@ -60,8 +59,9 @@ RSpec.describe TasksController, type: :controller do
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Task" do
+        task = valid_attributes
         expect {
-          post :create, params: {task: valid_attributes}, session: valid_session
+          post :create, params: {task: task}, session: valid_session
         }.to change(Task, :count).by(1)
       end
 
